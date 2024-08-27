@@ -398,6 +398,7 @@ using System.Runtime.CompilerServices;
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.CookieParameter))]
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.CreatingModelDataSourceEventArgs))]
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.CreatingModelDataSourceEventHandler))]
+[assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.CustomValidator))]
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.DataBoundControl))]
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.DataBoundControlMode))]
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.DataControlCellType))]
