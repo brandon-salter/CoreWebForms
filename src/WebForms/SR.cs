@@ -391,6 +391,9 @@ internal static class SR
     public const string Controls_Cant_Change_Between_Posts = "Failed to load viewstate.  The control tree into which viewstate is being loaded must match the control tree that was used to save viewstate during the previous request.  For example, when adding controls dynamically, the controls added during a post-back must match the type and position of the controls added during the initial request.";
     public const string ControlSkin_cannot_contain_controls = "Control skins cannot contain child controls.";
     public const string CookieParameter_CookieName = "The name of the cookie to get the value from.";
+    public const string CustomValidator_ClientValidationFunction = "The name of the client validation function.";
+    public const string CustomValidator_ValidateEmptyText = "Set to true if you want to validate that the text should not be empty.";
+    public const string CustomValidator_ServerValidate = "The event on the server to use for validation.";
     public const string Ctrl_not_data_handler = "Page.RegisterRequiresPostBack can only be called on controls that implement IPostBackDataHandler.";
     public const string Dangerous_input_detected_descr = nameof(Dangerous_input_detected_descr);
     public const string DataAnnotationsModelMetadataProvider_UnknownProperty = "{0} has a DisplayColumn attribute for {1}, but property {1} does not exist.";
