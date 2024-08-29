@@ -46,6 +46,7 @@ public abstract class TemplateParser : BaseParser, IAssemblyDependencyParser
     internal abstract BaseCodeDomTreeGenerator GetGenerator();
 
     internal const string CodeFileBaseClassAttributeName = "codefilebaseclass";
+    internal const string BaseClassCodeFileAttributeName = "baseclasscodefile";
 
     // The <compilation> config section
     private CompilationSection _compConfig;
@@ -631,8 +632,6 @@ public abstract class TemplateParser : BaseParser, IAssemblyDependencyParser
 
         // Register the <object> tag
         _typeMapper.RegisterTag("object", typeof(System.Web.UI.ObjectTag));
-
-        _sourceDependencies = new CaseInsensitiveStringSet();
 
         // Create and seed the stack of ID lists.
         _idListStack = new Stack();
@@ -2279,7 +2278,7 @@ private Match RunTextRegex(string text, int textPos) {
 
                 try
                 {
-                    ProcessCodeFile(VirtualPath.Create(Util.GetNonEmptyAttribute(name, value)));
+                    ProcessCodeFile(VirtualPath.Create(Util.GetNonEmptyAttribute(name, value)));                    
                 }
                 catch (Exception ex)
                 {

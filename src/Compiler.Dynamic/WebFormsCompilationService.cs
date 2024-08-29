@@ -40,7 +40,7 @@ internal sealed class WebFormsCompilationService : BackgroundService
 
         foreach (var extension in _options.Value.Parsers.Keys)
         {
-            matcher.AddExtension(extension);
+            matcher.AddExtension(extension);            
         }
 
         await ProcessChanges(stoppingToken).ConfigureAwait(false);

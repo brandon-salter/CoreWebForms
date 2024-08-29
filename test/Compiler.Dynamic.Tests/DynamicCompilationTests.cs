@@ -42,6 +42,7 @@ public class DynamicCompilationTests
     [DataRow("test12", "folder/subfolder.aspx")]
     [DataRow("test13", "custom_base_property.aspx")]
     [DataRow("test14", "sitemapdemo.aspx")]
+    [DataRow("test15", "custom_base_property.aspx")]
     public async Task CompiledPageRuns(string test, params string[] pages)
     {
         if (test == "test08")
@@ -121,7 +122,11 @@ public class DynamicCompilationTests
                         })
                         .AddWebForms()
                         .AddScriptManager()
-                        .AddDynamicPages();
+                        .AddDynamicPages(options =>
+                        {
+                            options.AddBaseClassFiles("base_page.cs");
+                            options.AddBaseClassFiles("class_to_reference.cs");
+                        });
                     services.AddSingleton<IDataProtectionProvider, NoopDataProtector>();
                 });
             })

@@ -51,8 +51,8 @@ internal sealed class SystemWebCompilation : IDisposable, IWebFormsCompiler
     {
         var aspxFiles = Files.GetFiles().Where(t => t.FullPath.EndsWith(".aspx"))
             .Select(t => new VirtualPath("/" + t.FullPath));
-        var compilation = new SystemWebCompilationUnit(strategy);
-
+        var compilation = new SystemWebCompilationUnit(strategy);        
+        
         foreach (var parser in GetParsersToCompile(aspxFiles, compilation))
         {
             compilation[parser.CurrentVirtualPath] = InternalCompilePage(compilation, parser, token);
@@ -69,7 +69,7 @@ internal sealed class SystemWebCompilation : IDisposable, IWebFormsCompiler
     private IEnumerable<DependencyParser> GetParsersToCompile(IEnumerable<VirtualPath> files, SystemWebCompilationUnit compilationUnit)
     {
         var parsers = new Dictionary<VirtualPath, DependencyParser>();
-
+        
         var stack = new Stack<VirtualPath>(files);
         var visited = new HashSet<VirtualPath>();
 

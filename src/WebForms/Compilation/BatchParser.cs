@@ -38,11 +38,17 @@ internal abstract class DependencyParser : BaseParser
         get { return _pagesConfig; }
     }
 
-    internal void Init(VirtualPath virtualPath)
+    internal void Init(VirtualPath virtualPath, IList<String> baseClassFiles)
     {
         CurrentVirtualPath = virtualPath;
         _virtualPath = virtualPath;
         _pagesConfig = MTConfigUtil.GetPagesConfig(virtualPath);
+
+        foreach(var baseClassFile in baseClassFiles)
+        {
+            
+            TemplateParser.AddSourceDependency(VirtualPath.Create(baseClassFile));
+        }
     }
 
     internal BaseTemplateParser TemplateParser
