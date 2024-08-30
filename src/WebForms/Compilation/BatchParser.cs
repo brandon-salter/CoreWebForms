@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.Globalization;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web.Util;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +39,7 @@ internal abstract class DependencyParser : BaseParser
         get { return _pagesConfig; }
     }
 
-    internal void Init(VirtualPath virtualPath, IList<String> baseClassFiles)
+    internal void Init(VirtualPath virtualPath, IList<String> baseClassFiles, IList<String> additionalAssemblyPaths)
     {
         CurrentVirtualPath = virtualPath;
         _virtualPath = virtualPath;
@@ -46,8 +47,13 @@ internal abstract class DependencyParser : BaseParser
 
         foreach(var baseClassFile in baseClassFiles)
         {
-            
             TemplateParser.AddSourceDependency(VirtualPath.Create(baseClassFile));
+        }
+
+        foreach(var assemblyPath in additionalAssemblyPaths)
+        {
+            var currentAssembly = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, assemblyPath));
+            TemplateParser.AddAssemblyDependency(currentAssembly.FullName, true);
         }
     }
 
@@ -59,7 +65,7 @@ internal abstract class DependencyParser : BaseParser
             {
                 return _baseTemplateParser;
             }
-            
+
             _baseTemplateParser = InitializeBaseTemplateParser();
             return _baseTemplateParser;
         }
@@ -482,7 +488,7 @@ internal class PageDependencyParser : TemplateControlDependencyParser
     }
 
     protected override BaseTemplateParser CreateTemplateParser() => new PageParser();
-   
+
     internal override void ProcessDirective(string directiveName, IDictionary directive)
     {
         base.ProcessDirective(directiveName, directive);

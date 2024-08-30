@@ -2,11 +2,13 @@
 
 using System.Diagnostics;
 using System.Net;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -43,8 +45,10 @@ public class DynamicCompilationTests
     [DataRow("test13", "custom_base_property.aspx")]
     [DataRow("test14", "sitemapdemo.aspx")]
     [DataRow("test15", "custom_base_property.aspx")]
+    [DataRow("test16", "custom_assembly_property.aspx")]
     public async Task CompiledPageRuns(string test, params string[] pages)
     {
+
         if (test == "test08")
         {
             Assert.Inconclusive("Currently broken on CI");
@@ -126,6 +130,7 @@ public class DynamicCompilationTests
                         {
                             options.AddBaseClassFiles("base_page.cs");
                             options.AddBaseClassFiles("class_to_reference.cs");
+                            options.AddAdditionalAssemblyPaths("Compiler.Dynamic.Tests.ReferenceAssembly.dll");
                         });
                     services.AddSingleton<IDataProtectionProvider, NoopDataProtector>();
                 });
