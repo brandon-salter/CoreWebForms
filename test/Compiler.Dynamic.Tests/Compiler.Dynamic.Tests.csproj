@@ -55,4 +55,12 @@
     <ProjectReference Include="..\..\src\Extensions\Extensions.csproj" />
   </ItemGroup>
 
+  
+  <ItemGroup>
+    <Reference Include="Compiler.Dynamic.Tests.ReferenceAssembly">
+    <HintPath>..\assets\test16\Compiler.Dynamic.Tests.ReferenceAssembly.dll</HintPath>
+    </Reference>
+    
+  </ItemGroup>
+
 </Project>
