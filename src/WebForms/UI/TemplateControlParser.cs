@@ -232,6 +232,10 @@ public abstract class TemplateControlParser : BaseTemplateParser
                 parseData[name] = Util.GetNonEmptyAttribute(name, value);
                 break;
 
+            case BaseClassCodeFileAttributeName:
+                AddSourceDependency(VirtualPath.Create(Util.GetNonEmptyAttribute(name, value)));
+                break;
+
             default:
                 // We didn't handle the attribute.  Try the base class
                 return base.ProcessMainDirectiveAttribute(deviceName, name, value, parseData);
