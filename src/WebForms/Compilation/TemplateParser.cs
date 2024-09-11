@@ -3403,12 +3403,22 @@ private Match RunTextRegex(string text, int textPos) {
      */
     private void AddBaseTypeDependencies(Type type)
     {
+        if(type == default)
+        {
+            throw new ArgumentNullException(nameof(type), $"type was null in AddBaseTypeDependencies");
+        }
+
         Assembly a = type.Module.Assembly;
 
         // If the type is in a standard assembly, don't bother
         if (a == typeof(string).Assembly || a == typeof(Page).Assembly || a == typeof(Uri).Assembly)
         {
             return;
+        }
+
+        if (a == default)
+        {
+            throw new Exception("a as assembly was null in AddBaseTypeDependencies");
         }
 
         AddAssemblyDependency(a);

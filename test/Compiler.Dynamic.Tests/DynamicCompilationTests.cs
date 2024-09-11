@@ -46,6 +46,7 @@ public class DynamicCompilationTests
     [DataRow("test14", "sitemapdemo.aspx")]
     [DataRow("test15", "custom_base_property.aspx")]
     [DataRow("test16", "custom_assembly_property.aspx")]
+    [DataRow("test17", "loadusercontrol.aspx")]
     public async Task CompiledPageRuns(string test, params string[] pages)
     {
 
@@ -57,6 +58,11 @@ public class DynamicCompilationTests
         if (test == "test13")
         {
             Assert.Inconclusive("Not implemented yet");
+        }
+
+        if (test == "test17")
+        {
+            Assert.Inconclusive("The view state invalidates the test results.");
         }
 
         // Arrange
@@ -129,6 +135,7 @@ public class DynamicCompilationTests
                         .AddDynamicPages(options =>
                         {
                             options.AddBaseClassFiles("base_page.cs");
+                            options.AddBaseClassFiles("controls/base_control.cs");
                             options.AddBaseClassFiles("class_to_reference.cs");
                             options.AddAdditionalAssemblyPaths("Compiler.Dynamic.Tests.ReferenceAssembly.dll");
                         });
