@@ -50,11 +50,13 @@ internal abstract class DependencyParser : BaseParser
             TemplateParser.AddSourceDependency(VirtualPath.Create(baseClassFile));
         }
 
-        foreach(var assemblyPath in additionalAssemblyPaths)
+        string[] assemblyFiles = Directory.GetFiles(Path.GetDirectoryName(Environment.ProcessPath), "*.dll");
+        foreach (var file in assemblyFiles)
         {
-            var currentAssembly = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, assemblyPath));
-            TemplateParser.AddAssemblyDependency(currentAssembly.FullName, true);
+            var currentAssembly = Assembly.LoadFile(file);
+            TemplateParser.AddAssemblyDependency(currentAssembly.FullName, false);
         }
+
     }
 
     internal BaseTemplateParser TemplateParser

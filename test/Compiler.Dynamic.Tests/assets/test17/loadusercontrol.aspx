@@ -1,4 +1,4 @@
-<%@ page language="C#" autoeventwireup="true" %>
+<%@ page language="C#" autoeventwireup="true" Inherits="SystemWebUISample.Pages.LoadUserControl" CodeBehind="loadusercontrol.aspx.cs" %>
 
 <%@ register src="~/controls/mycontrol.ascx" tagprefix="mine" tagname="mycontrol" %>
 
@@ -8,17 +8,8 @@
 <body>
     <form runat="server">
         <asp:Panel ID="panel1" runat="Server">
-            <mine:mycontrol ID="control" runat="server"></mine:mycontrol></asp:Panel>
+            <mine:mycontrol ID="control" runat="server" OnChangeParentControl="HandleChildUpdate"></mine:mycontrol></asp:Panel>
     </form>
 
 </body>
 </html>
-
-<script runat="server">
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        this.EnableViewState = false;
-        this.ViewStateMode = ViewStateMode.Disabled;
-        //panel1.Controls.Add(Page.LoadControl("~/controls/mycontrol.ascx"));
-    }     
-</script>

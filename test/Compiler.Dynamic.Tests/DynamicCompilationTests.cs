@@ -134,10 +134,10 @@ public class DynamicCompilationTests
                         .AddScriptManager()
                         .AddDynamicPages(options =>
                         {
+                            options.AddBaseClassFiles("supporting_enum.cs");
                             options.AddBaseClassFiles("base_page.cs");
                             options.AddBaseClassFiles("controls/base_control.cs");
                             options.AddBaseClassFiles("class_to_reference.cs");
-                            options.AddAdditionalAssemblyPaths("Compiler.Dynamic.Tests.ReferenceAssembly.dll");
                         });
                     services.AddSingleton<IDataProtectionProvider, NoopDataProtector>();
                 });

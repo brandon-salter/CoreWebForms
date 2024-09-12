@@ -19,58 +19,8 @@
   <ItemGroup>
     <TestAssets Include="assets/**/*" />
     <Compile Remove="@(TestAssets)" />
-    <Compile Remove="assets\test17\controls\base_control.cs" />
-    <Compile Remove="assets\test17\mycontrol.ascx.cs" />
-    <Compile Remove="assets\test15\base_page.cs" />
-    <Compile Remove="assets\test15\class_to_reference.cs" />
-    <Compile Remove="assets\test15\custom_base_property.aspx.cs" />
     <None Remove="@(TestAssets)" />
-    <None Remove="assets\test17\loadusercontrol.aspx" />
-    <None Remove="assets\test17\loadusercontrol.aspx._0.html" />
-    <None Remove="assets\test17\mycontrol.ascx" />
-    <None Remove="assets\test15\custom_base_property.aspx" />
-    <None Remove="assets\test15\custom_base_property.aspx._0.html" />
-    <TestAssets Remove="assets\test17\controls\base_control.cs" />
-    <TestAssets Remove="assets\test17\loadusercontrol.aspx" />
-    <TestAssets Remove="assets\test17\loadusercontrol.aspx._0.html" />
-    <TestAssets Remove="assets\test17\mycontrol.ascx" />
-    <TestAssets Remove="assets\test17\mycontrol.ascx.cs" />
-    <TestAssets Remove="assets\test15\base_page.cs" />
-    <TestAssets Remove="assets\test15\class_to_reference.cs" />
-    <TestAssets Remove="assets\test15\custom_base_property.aspx" />
-    <TestAssets Remove="assets\test15\custom_base_property.aspx.cs" />
-    <TestAssets Remove="assets\test15\custom_base_property.aspx._0.html" />
     <Content Include="@(TestAssets)">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\test17\controls\base_control.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\test17\loadusercontrol.aspx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\test17\loadusercontrol.aspx._0.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\test17\controls\mycontrol.ascx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\test17\controls\mycontrol.ascx.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\test15\class_to_reference.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\test15\base_page.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\test15\custom_base_property.aspx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\test15\custom_base_property.aspx.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\test15\custom_base_property.aspx._0.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
