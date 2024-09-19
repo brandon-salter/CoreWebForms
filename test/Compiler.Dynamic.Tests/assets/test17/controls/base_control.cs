@@ -1,9 +1,8 @@
 // MIT License.
 
 using System.Web.UI;
-using Compiler.Dynamic.Tests.ReferenceAssembly;
 
-namespace SystemWebUISample.Base
+namespace SystemWebUISample.Controls
 {
 
     public partial class BaseControl : System.Web.UI.UserControl
@@ -11,6 +10,7 @@ namespace SystemWebUISample.Base
         public BaseControl()
         {
         }
+
 
     }
 }

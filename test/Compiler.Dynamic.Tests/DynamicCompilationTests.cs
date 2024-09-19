@@ -60,10 +60,10 @@ public class DynamicCompilationTests
             Assert.Inconclusive("Not implemented yet");
         }
 
-        if (test == "test17")
-        {
-            Assert.Inconclusive("The view state invalidates the test results.");
-        }
+        //if (test == "test17")
+        //{
+        //    Assert.Inconclusive("The view state invalidates the test results.");
+        //}
 
         // Arrange
         using var cts = Debugger.IsAttached ? new CancellationTokenSource() : new CancellationTokenSource(TimeSpan.FromSeconds(30));
@@ -134,10 +134,11 @@ public class DynamicCompilationTests
                         .AddScriptManager()
                         .AddDynamicPages(options =>
                         {
+                            
                             options.AddBaseClassFiles("supporting_enum.cs");
-                            options.AddBaseClassFiles("base_page.cs");
+                            //options.AddBaseClassFiles("base_page.cs");
                             options.AddBaseClassFiles("controls/base_control.cs");
-                            options.AddBaseClassFiles("class_to_reference.cs");
+                            //options.AddBaseClassFiles("class_to_reference.cs");
                         });
                     services.AddSingleton<IDataProtectionProvider, NoopDataProtector>();
                 });

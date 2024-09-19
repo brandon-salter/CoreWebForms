@@ -39,7 +39,7 @@ internal abstract class DependencyParser : BaseParser
         get { return _pagesConfig; }
     }
 
-    internal void Init(VirtualPath virtualPath, IList<String> baseClassFiles, IList<String> additionalAssemblyPaths)
+    internal void Init(VirtualPath virtualPath, IList<String> baseClassFiles)
     {
         CurrentVirtualPath = virtualPath;
         _virtualPath = virtualPath;
@@ -53,6 +53,7 @@ internal abstract class DependencyParser : BaseParser
         string[] assemblyFiles = Directory.GetFiles(Path.GetDirectoryName(Environment.ProcessPath), "*.dll");
         foreach (var file in assemblyFiles)
         {
+            Console.Out.WriteLine($"loading assembly {file}");
             var currentAssembly = Assembly.LoadFile(file);
             TemplateParser.AddAssemblyDependency(currentAssembly.FullName, false);
         }

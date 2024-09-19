@@ -19,8 +19,6 @@ public class PageCompilationOptions
     internal List<TagNamespaceRegisterEntry> Entries { get; } = [];
 
     internal List<string> BaseClassFiles { get; } = [];
-    internal List<string> AdditionalAssemblyPaths { get; } = [];
-
     internal IFileProvider WebFormsFileProvider { get; set; } = default!;
 
     internal Dictionary<string, Func<VirtualPath, IWebFormsCompilationFeature, DependencyParser>> Parsers { get; } = new(StringComparer.OrdinalIgnoreCase);
@@ -36,11 +34,6 @@ public class PageCompilationOptions
         BaseClassFiles.Add(extension);
     }
 
-    public void AddAdditionalAssemblyPaths(string assemblyPath)
-    {
-        AdditionalAssemblyPaths.Add(assemblyPath);
-    }
-
     internal void AddParser<DParser>(string extension)
         where DParser : DependencyParser, new()
     {
@@ -51,7 +44,7 @@ public class PageCompilationOptions
                 WebFormsFileProvider = WebFormsFileProvider,
                 CompiledTypeAccessor = compiledTypeAccessor,
             };
-            dependencyParser.Init(path, BaseClassFiles, AdditionalAssemblyPaths);
+            dependencyParser.Init(path, BaseClassFiles);
 
             return dependencyParser;
         }

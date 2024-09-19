@@ -971,6 +971,8 @@ public abstract class TemplateParser : BaseParser, IAssemblyDependencyParser
         }
         catch (Exception e)
         {
+
+            Console.Out.WriteLine($"error is coming: {virtualPath}");
 #if PORT_ERROR_REPORTING
             ErrorFormatter errorFormatter = null;
 
