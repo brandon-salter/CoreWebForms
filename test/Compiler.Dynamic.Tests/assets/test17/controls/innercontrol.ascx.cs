@@ -11,5 +11,21 @@ namespace SystemWebUISample.Controls
     {
         public string HeaderText = "Header Working";
 
+
+        public delegate void ButtonClickDelegate(string CommandName, string CommandArgument);
+        public event ButtonClickDelegate ButtonClick;
+
+        private string[] NoteCategoryList
+        {
+            get
+            {
+                return (string[])ViewState["NoteCategoryList"];
+            }
+            set
+            {
+                ViewState["NoteCategoryList"] = value;
+            }
+        }
+
     }
 }

@@ -4,5 +4,5 @@
 <div>
     Hi from control!
 
-    <mine:innercontrol ID="control" runat="server" ></mine:innercontrol>
+    <mine:innercontrol ID="control" runat="server" OnButtonClick="cmdAddNote_ButtonClick" ></mine:innercontrol>
 </div>

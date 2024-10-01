@@ -19,11 +19,7 @@
   <ItemGroup>
     <TestAssets Include="assets/**/*" />
     <Compile Remove="@(TestAssets)" />
-    <Compile Remove="assets\test17\controls\mycontrol - Copy.ascx.cs" />
     <None Remove="@(TestAssets)" />
-    <None Remove="assets\test17\controls\innercontrol.ascx" />
-    <TestAssets Remove="assets\test17\controls\innercontrol.ascx" />
-    <TestAssets Remove="assets\test17\controls\mycontrol - Copy.ascx.cs" />
     <Content Include="@(TestAssets)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -47,5 +43,6 @@
     </Reference>
     
   </ItemGroup>
+
 
 </Project>

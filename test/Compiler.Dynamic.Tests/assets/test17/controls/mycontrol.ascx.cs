@@ -14,5 +14,11 @@ namespace SystemWebUISample.Controls
         public event UpdateParentDelegate ChangeParentControl;
 
         public delegate void UpdateParentDelegate(SystemWebUISample.SupportingEnum NextControl, string Mode);
+
+        protected void cmdAddNote_ButtonClick(string CommandName, string CommandArgument)
+        {
+
+        }
+
     }
 }

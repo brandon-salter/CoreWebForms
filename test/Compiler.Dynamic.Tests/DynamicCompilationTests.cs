@@ -47,6 +47,7 @@ public class DynamicCompilationTests
     [DataRow("test15", "custom_base_property.aspx")]
     [DataRow("test16", "custom_assembly_property.aspx")]
     [DataRow("test17", "loadusercontrol.aspx")]
+    [DataRow("test18", "loadpagewithquery.aspx")]
     public async Task CompiledPageRuns(string test, params string[] pages)
     {
 
@@ -60,10 +61,10 @@ public class DynamicCompilationTests
             Assert.Inconclusive("Not implemented yet");
         }
 
-        //if (test == "test17")
-        //{
-        //    Assert.Inconclusive("The view state invalidates the test results.");
-        //}
+        if (test == "test17")
+        {
+            Assert.Inconclusive("The view state invalidates the test results.");
+        }
 
         // Arrange
         using var cts = Debugger.IsAttached ? new CancellationTokenSource() : new CancellationTokenSource(TimeSpan.FromSeconds(30));
