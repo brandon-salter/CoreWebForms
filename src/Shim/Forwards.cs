@@ -655,6 +655,7 @@ using System.Runtime.CompilerServices;
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.TargetConverter))]
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.TemplatedWizardStep))]
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.TemplateField))]
+[assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.TemplateColumn))]
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.TextAlign))]
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.TextBox))]
 [assembly: TypeForwardedTo(typeof(System.Web.UI.WebControls.TextBoxMode))]
