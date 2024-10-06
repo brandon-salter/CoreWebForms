@@ -94,7 +94,27 @@ internal sealed class SystemWebCompilation : IDisposable, IWebFormsCompiler
             if (ReferenceEquals(stack.Peek(), currentPath))
             {
                 stack.Pop();
-                parser.Parse();
+                try
+                {
+                    parser.Parse();
+                }
+                catch(HttpParseException ex)
+                {
+                    if (ex.Message.Contains("no type found for virtual path"))
+                    {
+                        var nextItem = stack.Pop();
+                        stack.Push(currentPath);
+                        stack.Push(nextItem);
+                        parsers.Remove(currentPath);// = null;
+                        continue;
+                    }
+                    else
+                    {
+                        stack.Clear();
+                        throw;
+                    }
+                }
+
                 yield return parser;
             }
         }

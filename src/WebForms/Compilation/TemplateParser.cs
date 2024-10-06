@@ -3420,7 +3420,7 @@ private Match RunTextRegex(string text, int textPos) {
 
         if (a == default)
         {
-            throw new Exception("a as assembly was null in AddBaseTypeDependencies");
+            //throw new Exception("a as assembly was null in AddBaseTypeDependencies");
         }
 
         AddAssemblyDependency(a);
