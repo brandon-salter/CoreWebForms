@@ -51,8 +51,8 @@ internal sealed class SystemWebCompilation : IDisposable, IWebFormsCompiler
     {
         var aspxFiles = Files.GetFiles().Where(t => t.FullPath.EndsWith(".aspx"))
             .Select(t => new VirtualPath("/" + t.FullPath));
-        var compilation = new SystemWebCompilationUnit(strategy);        
-        
+        var compilation = new SystemWebCompilationUnit(strategy);
+
         foreach (var parser in GetParsersToCompile(aspxFiles, compilation))
         {
             compilation[parser.CurrentVirtualPath] = InternalCompilePage(compilation, parser, token);
@@ -65,57 +65,46 @@ internal sealed class SystemWebCompilation : IDisposable, IWebFormsCompiler
     /// We need to identify the order for building. Dependencies of a page/control/etc can be retrieved
     /// by using <see cref="TemplateParser.GetDependencyPaths"/>, but we want to ensure we only compile something if its
     /// dependencies have already been compiled.
+    /// Basic steps:
+    /// 1 - Parse page and get dependencies
+    /// 2 - Get dependencies of children - save with depth
+    /// 3 - Recusively keep going down until no more
+    /// 4 - Reverse order the dependencies based on depth and parse
     /// </summary>
     private IEnumerable<DependencyParser> GetParsersToCompile(IEnumerable<VirtualPath> files, SystemWebCompilationUnit compilationUnit)
     {
-        var parsers = new Dictionary<VirtualPath, DependencyParser>();
-        
+        var parsers = new Dictionary<(int Depth, VirtualPath FilePath), DependencyParser>();
+
         var stack = new Stack<VirtualPath>(files);
-        var visited = new HashSet<VirtualPath>();
+        var processedParsers = new HashSet<VirtualPath>();
+        int depth = 0;
 
-        while (stack.Count > 0)
+        foreach (var currentPath in files)
         {
-            var currentPath = stack.Peek();
+            GetFileParsers(currentPath, parsers, depth, compilationUnit);
+        }
 
-            if (!parsers.TryGetValue(currentPath, out var parser))
+        var orderedParsers = parsers.OrderByDescending(kvp => kvp.Key.Depth).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+        foreach (var parser in orderedParsers)
+        {
+            if (processedParsers.Add(parser.Key.FilePath))
             {
-                parsers[currentPath] = parser = CreateParser(currentPath, compilationUnit);
+                parser.Value.Parse();
+                yield return parser.Value;
             }
+        }
+    }
+
+    private void GetFileParsers(string currentPath, Dictionary<(int, VirtualPath), DependencyParser> parsers, int depth, SystemWebCompilationUnit compilationUnit)
+    {
+        if (!parsers.TryGetValue((depth, currentPath), out var parser))
+        {
+            parsers[(depth, currentPath)] = parser = CreateParser(currentPath, compilationUnit);
 
             foreach (var dependency in parser.GetDependencyPaths())
             {
-                if (visited.Add(dependency))
-                {
-                    stack.Push(dependency);
-                }
-            }
-
-            // If no dependencies were added, the top will still be the current path and we should return it
-            if (ReferenceEquals(stack.Peek(), currentPath))
-            {
-                stack.Pop();
-                try
-                {
-                    parser.Parse();
-                }
-                catch(HttpParseException ex)
-                {
-                    if (ex.Message.Contains("no type found for virtual path"))
-                    {
-                        var nextItem = stack.Pop();
-                        stack.Push(currentPath);
-                        stack.Push(nextItem);
-                        parsers.Remove(currentPath);// = null;
-                        continue;
-                    }
-                    else
-                    {
-                        stack.Clear();
-                        throw;
-                    }
-                }
-
-                yield return parser;
+                GetFileParsers(dependency, parsers, depth + 1, compilationUnit);
             }
         }
     }

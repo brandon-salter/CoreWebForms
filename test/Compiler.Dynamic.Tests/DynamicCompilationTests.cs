@@ -48,6 +48,7 @@ public class DynamicCompilationTests
     [DataRow("test16", "custom_assembly_property.aspx")]
     [DataRow("test17", "loadusercontrol.aspx")]
     [DataRow("test18", "loadpagewithquery.aspx")]
+    [DataRow("test19", "loadpagewithsubcontrols.aspx")]
     public async Task CompiledPageRuns(string test, params string[] pages)
     {
 
@@ -187,11 +188,17 @@ public class DynamicCompilationTests
             else
             {
                 Assert.AreEqual(expectedHtml.ReplaceLineEndings(), result.ReplaceLineEndings());
+                //Assert.AreEqual(RemoveWhitespace(expectedHtml.ReplaceLineEndings()), RemoveWhitespace(result.ReplaceLineEndings()));
             }
         }
     }
 
     private static string NormalizePage(string path) => path.Replace("/", "__");
+
+    private static string RemoveWhitespace(string text)
+    {
+        return new string(text.Where(c => !Char.IsWhiteSpace(c)).ToArray());
+    }
 
     // Allows for data protection to be turned off for testing purposes.
     private sealed class NoopDataProtector : IDataProtector, IDataProtectionProvider
