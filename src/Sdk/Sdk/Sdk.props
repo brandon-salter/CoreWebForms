@@ -2,7 +2,7 @@
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk.Web"/>
 
   <PropertyGroup>
-    <WebFormsVersion>1.0.7.8</WebFormsVersion>
+    <WebFormsVersion>1.0.7.9</WebFormsVersion>
   </PropertyGroup>
 
   <Import Project="Sdk.Version.props" Condition="Exists('Sdk.Version.props') "/>

@@ -20,7 +20,7 @@
     <TestAssets Include="assets/**/*" />
     <Compile Remove="@(TestAssets)" />
     <None Remove="@(TestAssets)" />
-  
+    
     <Content Include="@(TestAssets)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -48,4 +48,9 @@
     </Reference>
     
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="assets\test20\scripts\" />
+  </ItemGroup>
+
 </Project>

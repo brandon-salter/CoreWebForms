@@ -2,13 +2,11 @@
 
 using System.Diagnostics;
 using System.Net;
-using System.Reflection;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -49,6 +47,7 @@ public class DynamicCompilationTests
     [DataRow("test17", "loadusercontrol.aspx")]
     [DataRow("test18", "loadpagewithquery.aspx")]
     [DataRow("test19", "loadpagewithsubcontrols.aspx")]
+    [DataRow("test20", "loadpagewithserialization.aspx")]
     public async Task CompiledPageRuns(string test, params string[] pages)
     {
 
@@ -195,10 +194,10 @@ public class DynamicCompilationTests
 
     private static string NormalizePage(string path) => path.Replace("/", "__");
 
-    private static string RemoveWhitespace(string text)
-    {
-        return new string(text.Where(c => !Char.IsWhiteSpace(c)).ToArray());
-    }
+    //private static string RemoveWhitespace(string text)
+    //{
+    //    return new string(text.Where(c => !Char.IsWhiteSpace(c)).ToArray());
+    //}
 
     // Allows for data protection to be turned off for testing purposes.
     private sealed class NoopDataProtector : IDataProtector, IDataProtectionProvider

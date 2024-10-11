@@ -1,0 +1,40 @@
+<%@ master language="C#" autoeventwireup="true" enabletheming="true" inherits="LoadPage" codebehind="LoadPage.master.cs" %>
+
+<!DOCTYPE html>
+<html>
+<head id="Header" runat="server">
+    <title>This is the page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <%: System.Web.Optimization.Scripts.Render("~/bundles/knockout") %>
+    <form id="form1" enctype="multipart/form-data" runat="server">
+        <asp:ScriptManager runat="server" ID="scriptManager" ScriptMode="Release" CompositeScript-ScriptMode="Release" LoadScriptsBeforeUI="false">
+            <Scripts>
+                <asp:ScriptReference Path="~/scripts/tree.js" />
+            </Scripts>
+        </asp:ScriptManager>
+        <header>
+            <div>This is the page header</div>
+        </header>
+
+        <main id="ContentSection" runat="server">
+            <div>
+                <h1>Page Title</h1>
+                <asp:ContentPlaceHolder ID="cpBody" runat="server"></asp:ContentPlaceHolder>
+                <asp:UpdateProgress ID="UpdateProgress1" runat="server" DisplayAfter="1500">
+                    <ProgressTemplate>
+                        <div>
+                            <span>Processing</span>
+                        </div>
+                    </ProgressTemplate>
+                </asp:UpdateProgress>
+            </div>
+        </main>
+        <footer>
+            <div>This is the page footer</div>
+        </footer>
+    </form>
+</body>
+</html>
