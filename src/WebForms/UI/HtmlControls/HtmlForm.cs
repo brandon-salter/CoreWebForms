@@ -1,5 +1,7 @@
 // MIT License.
 
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Http;
 using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
@@ -344,7 +346,16 @@ public class HtmlForm : HtmlContainerControl
 
         return action;
 #endif
-        return Context.Request.Path ?? "./";
+
+        var context = this.Context.GetService<IHttpContextAccessor>();
+        if (context != null)
+        {
+            return string.Concat(context.HttpContext.Request.PathBase, Context.Request.Path) ?? "./";
+        }
+        else
+        {
+            return Context.Request.Path ?? "./";
+        }
     }
 
     /// <internalonly/>

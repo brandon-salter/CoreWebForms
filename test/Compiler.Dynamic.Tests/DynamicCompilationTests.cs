@@ -92,9 +92,11 @@ public class DynamicCompilationTests
             })
             .ConfigureWebHost(app =>
             {
+                
                 app.UseTestServer();
                 app.Configure(app =>
                 {
+                    //app.UsePathBase("/testpathbase");
                     app.UseRouting();
                     app.UseSession();
                     app.UseSystemWebAdapters();
@@ -120,6 +122,7 @@ public class DynamicCompilationTests
                         options.SerializerOptions.WriteIndented = true;
                     });
 
+                    services.AddHttpContextAccessor();
                     services.AddDistributedMemoryCache();
                     services.AddRouting();
                     services.AddSystemWebAdapters()
@@ -143,20 +146,22 @@ public class DynamicCompilationTests
                         });
                     services.AddSingleton<IDataProtectionProvider, NoopDataProtector>();
                 });
+                
             })
             .Start();
 
         // Act
         var client = host.GetTestClient();
 
+        client.BaseAddress = new Uri("http://localhost");
         for (int i = 0; i < pages.Length; i++)
         {
             var expectedHtml = expectedPages[i];
             var page = pages[i];
 
             string? result = null;
+            //var currentPage = $"/testpathbase/{page}";
             var currentPage = page;
-
             do
             {
                 using var response = await client.GetAsync(currentPage, cts.Token);
