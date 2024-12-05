@@ -96,7 +96,7 @@ public class DynamicCompilationTests
                 app.UseTestServer();
                 app.Configure(app =>
                 {
-                    //app.UsePathBase("/testpathbase");
+                    app.UsePathBase("/testpathbase");
                     app.UseRouting();
                     app.UseSession();
                     app.UseSystemWebAdapters();

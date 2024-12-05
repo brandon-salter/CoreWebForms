@@ -682,6 +682,25 @@ internal static class Util
     {
         return true;
     }
+   internal static string GetClientValidateEvent(string validationGroup) {
+        if (validationGroup == null) {
+            validationGroup = String.Empty;
+        }
+        return "if (typeof(Page_ClientValidate) == 'function') Page_ClientValidate('" +
+               validationGroup +
+               "'); ";
+    }
+
+    internal static string GetClientValidatedPostback(Control control, string validationGroup) {
+        return GetClientValidatedPostback(control, validationGroup, string.Empty);
+    }
+
+    internal static string GetClientValidatedPostback(Control control,
+                                                      string validationGroup,
+                                                      string argument) {
+        string postbackReference = control.Page.ClientScript.GetPostBackEventReference(control, argument, true);
+        return GetClientValidateEvent(validationGroup) + postbackReference;
+    }
 
     internal static void WriteOnClickAttribute(HtmlTextWriter writer,
                                               HtmlControls.HtmlControl control,
@@ -689,7 +708,38 @@ internal static class Util
                                               bool submitsProgramatically,
                                               bool causesValidation,
                                               string validationGroup)
-        => throw new NotImplementedException();
+    {
+        AttributeCollection attributes = control.Attributes;
+        string injectedOnClick = null;
+        if (submitsAutomatically) {
+            if (causesValidation) {
+                injectedOnClick = Util.GetClientValidateEvent(validationGroup);
+            }
+            control.Page.ClientScript.RegisterForEventValidation(control.UniqueID);
+        }
+        else if (submitsProgramatically) {
+            if (causesValidation) {
+                injectedOnClick = Util.GetClientValidatedPostback(control, validationGroup);
+            }
+            else {
+                injectedOnClick = control.Page.ClientScript.GetPostBackEventReference(control, String.Empty, true);
+            }
+        }
+        else {
+            control.Page.ClientScript.RegisterForEventValidation(control.UniqueID);
+        }
+
+        if (injectedOnClick != null) {
+            string existingOnClick = attributes["onclick"];
+            if (existingOnClick != null) {
+                attributes.Remove("onclick");
+                writer.WriteAttribute("onclick", existingOnClick + " " + injectedOnClick);
+            }
+            else {
+                writer.WriteAttribute("onclick", injectedOnClick);
+            }
+        }
+    }
 
     internal static int FirstNonWhiteSpaceIndex(string s)
     {
