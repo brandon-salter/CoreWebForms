@@ -82,11 +82,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebForms.SqlClient", "src\W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{68F6E392-429C-47EF-8337-8026E45FE011}"
 EndProject
-<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compiler.Dynamic.Tests.ReferenceAssembly", "test\Compiler.Dynamic.Tests.ReferenceAssembly\Compiler.Dynamic.Tests.ReferenceAssembly.csproj", "{3D24E4FA-34A3-46F4-840B-749A10EEA95A}"
-=======
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shim-generator", "tools\shim-generator\shim-generator.csproj", "{52FFB358-238C-18D9-4153-CEE47341D2BD}"
->>>>>>> main
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -182,17 +179,14 @@ Global
 		{68F6E392-429C-47EF-8337-8026E45FE011}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68F6E392-429C-47EF-8337-8026E45FE011}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68F6E392-429C-47EF-8337-8026E45FE011}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{3D24E4FA-34A3-46F4-840B-749A10EEA95A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3D24E4FA-34A3-46F4-840B-749A10EEA95A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D24E4FA-34A3-46F4-840B-749A10EEA95A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D24E4FA-34A3-46F4-840B-749A10EEA95A}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
 		{52FFB358-238C-18D9-4153-CEE47341D2BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{52FFB358-238C-18D9-4153-CEE47341D2BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52FFB358-238C-18D9-4153-CEE47341D2BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52FFB358-238C-18D9-4153-CEE47341D2BD}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> main
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,11 +214,8 @@ Global
 		{1535544F-57A9-40E1-8EF0-82E47FAA4AE2} = {D3D2945C-76BA-4DE3-90D2-259E2B1406C5}
 		{F379D554-603D-4342-A04C-FE1AB14A19D3} = {D3D2945C-76BA-4DE3-90D2-259E2B1406C5}
 		{68F6E392-429C-47EF-8337-8026E45FE011} = {D3D2945C-76BA-4DE3-90D2-259E2B1406C5}
-<<<<<<< HEAD
 		{3D24E4FA-34A3-46F4-840B-749A10EEA95A} = {0E3C5885-15E6-4F5F-8D2C-088A0E255666}
-=======
 		{52FFB358-238C-18D9-4153-CEE47341D2BD} = {23A5C92F-7ED5-43A1-AF04-082FBB0F8AB8}
->>>>>>> main
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B89024DA-2E51-49B1-8D52-651372AB5C83}
