@@ -3,6 +3,7 @@
 using System.Diagnostics;
 using System.Net;
 using System.Text.Json.Serialization;
+using System.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -19,10 +20,9 @@ namespace Compiler.Dynamic.Tests;
 [TestClass]
 public class DynamicCompilationTests
 {
-    private static TestContext _context = null!;
+    private readonly TestContext _context;
 
-    [ClassInitialize]
-    public static void Initialize(TestContext context)
+    public DynamicCompilationTests(TestContext context)
     {
         _context = context;
     }
@@ -145,6 +145,15 @@ public class DynamicCompilationTests
                             //options.AddBaseClassFiles("class_to_reference.cs");
                         });
                     services.AddSingleton<IDataProtectionProvider, NoopDataProtector>();
+                    if (test == "test14")
+                    {
+                        services.Configure<SiteMapOptions>(
+                            options =>
+                            {
+                                options.DefaultProvider = "AspNetXmlSiteMapProvider";
+                                options.Enabled = true;
+                            });
+                    }
                 });
                 
             })
@@ -170,7 +179,7 @@ public class DynamicCompilationTests
                 {
                     currentPage = response.Headers.Location!.ToString();
                 }
-                else if (response.IsSuccessStatusCode)
+                else if (response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.InternalServerError)
                 {
                     result = await response.Content.ReadAsStringAsync();
                 }

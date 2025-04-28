@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <IsShipped>true</IsShipped>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFrameworks>net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <AssemblyName>WebForms.Extensions</AssemblyName>
@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Optimization\Optimization.csproj" />
     <ProjectReference Include="..\WebForms\WebForms.csproj" />
   </ItemGroup>
 
@@ -32,6 +31,18 @@
     <EmbeddedResource Update="Resources\AtlasWeb.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AtlasWeb.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ScriptLibrary\Res.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ScriptLibrary\Res.debug.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ScriptLibrary\WebForms.Res.debug.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ScriptLibrary\WebForms.Res.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

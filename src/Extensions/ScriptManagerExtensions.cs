@@ -23,6 +23,7 @@ public static class ScriptManagerExtensions
     {
         builder.Services.TryAddSingleton<ScriptResourceHandler>();
         builder.Services.AddSingleton<IScriptResourceHandler>(sp => sp.GetRequiredService<ScriptResourceHandler>());
+        builder.Services.AddSingleton<IBundleResolver, ReflectionBundleResolver>();
 
         return builder;
     }
@@ -36,7 +37,7 @@ public static class ScriptManagerExtensions
         {
             if (request.Query["s"] is [{ } file] && handler.Resolve(file) is { } resource)
             {
-                return TypedResults.Stream(resource);
+                return TypedResults.Stream(resource, "application/javascript");
             }
             else
             {
