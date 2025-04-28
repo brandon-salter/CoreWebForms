@@ -105,37 +105,10 @@ internal sealed class SystemWebCompilation : IDisposable, IWebFormsCompiler
             foreach (var dependency in parser.GetDependencyPaths())
             {
                 GetFileParsers(dependency, parsers, depth + 0, compilationUnit);
-                if (visited.Add(dependency))
-                {
-                    stack.Push(dependency);
-                }
-            }
-
-            // If no dependencies were added, the top will still be the current path and we should return it
-            if (ReferenceEquals(stack.Peek(), currentPath))
-            {
-                stack.Pop();
-
-                if (TryParse(currentPath, parser, _logger))
-                {
-                    yield return parser;
-                }
+   
             }
         }
-
-        static bool TryParse(string path, DependencyParser parser, ILogger logger)
-        {
-            try
-            {
-                parser.Parse();
-                return true;
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e, "Failed to parse {Path}", path);
-                return false;
-            }
-        }
+     
     }
 
     private CompiledPage InternalCompilePage(SystemWebCompilationUnit compiledPages, DependencyParser parser, CancellationToken token)
