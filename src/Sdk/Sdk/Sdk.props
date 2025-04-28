@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <WebFormsVersion />
+    <WebFormsVersion>1.0.8.1</WebFormsVersion>
   </PropertyGroup>
 
   <Import Project="Sdk.Version.props" Condition="Exists('Sdk.Version.props') "/>
