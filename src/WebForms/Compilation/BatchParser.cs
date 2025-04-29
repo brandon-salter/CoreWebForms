@@ -44,6 +44,7 @@ internal abstract class DependencyParser : BaseParser
         CurrentVirtualPath = virtualPath;
         _virtualPath = virtualPath;
         _pagesConfig = MTConfigUtil.GetPagesConfig(virtualPath);
+/*
 
         foreach(var baseClassFile in baseClassFiles)
         {
@@ -54,10 +55,11 @@ internal abstract class DependencyParser : BaseParser
 
 
         var directory = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory();
-        var currentAssembly = Assembly.LoadFile($"{directory}\\netstandard.dll");
+        var currentAssembly = Assembly.LoadFile(Path.Combine(directory, "netstandard.dll"));
 
         TemplateParser.AddAssemblyDependency(currentAssembly, true); 
-
+        
+*/
     }
 
     internal void loadAssemblies(string rootPath)
