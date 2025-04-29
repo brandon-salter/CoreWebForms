@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.Globalization;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web.Util;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,11 +39,37 @@ internal abstract class DependencyParser : BaseParser
         get { return _pagesConfig; }
     }
 
-    internal void Init(VirtualPath virtualPath)
+    internal void Init(VirtualPath virtualPath, IList<String> baseClassFiles)
     {
         CurrentVirtualPath = virtualPath;
         _virtualPath = virtualPath;
         _pagesConfig = MTConfigUtil.GetPagesConfig(virtualPath);
+
+        foreach(var baseClassFile in baseClassFiles)
+        {
+            TemplateParser.AddSourceDependency(VirtualPath.Create(baseClassFile));
+        }
+
+        loadAssemblies(Path.GetDirectoryName(Environment.ProcessPath));
+
+
+        var directory = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory();
+        var currentAssembly = Assembly.LoadFile($"{directory}\\netstandard.dll");
+
+        TemplateParser.AddAssemblyDependency(currentAssembly, true); 
+
+    }
+
+    internal void loadAssemblies(string rootPath)
+    {
+        string[] assemblyFiles = Directory.GetFiles(rootPath, "*.dll");
+        foreach (var file in assemblyFiles)
+        {
+            var currentAssembly = Assembly.LoadFile(file);
+
+            TemplateParser.AddAssemblyDependency(currentAssembly.FullName, false);
+
+        }
     }
 
     internal BaseTemplateParser TemplateParser
@@ -53,7 +80,7 @@ internal abstract class DependencyParser : BaseParser
             {
                 return _baseTemplateParser;
             }
-            
+
             _baseTemplateParser = InitializeBaseTemplateParser();
             return _baseTemplateParser;
         }
@@ -476,7 +503,7 @@ internal class PageDependencyParser : TemplateControlDependencyParser
     }
 
     protected override BaseTemplateParser CreateTemplateParser() => new PageParser();
-   
+
     internal override void ProcessDirective(string directiveName, IDictionary directive)
     {
         base.ProcessDirective(directiveName, directive);

@@ -185,6 +185,10 @@ public abstract class BaseTemplateParser : TemplateParser
         return t;
 #else
         var t = CompiledTypeAccessor.GetForPath(virtualPath);
+        if (t == default)
+        {
+            throw new Exception($"no type found for virtual path {virtualPath}");
+        }
         AddTypeDependency(t);
         return t;
 #endif

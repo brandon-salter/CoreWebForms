@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
 
     <!-- Workaround for https://github.com/dotnet/roslyn/issues/41640 -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

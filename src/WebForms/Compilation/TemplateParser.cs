@@ -46,6 +46,7 @@ public abstract class TemplateParser : BaseParser, IAssemblyDependencyParser
     internal abstract BaseCodeDomTreeGenerator GetGenerator();
 
     internal const string CodeFileBaseClassAttributeName = "codefilebaseclass";
+    internal const string BaseClassCodeFileAttributeName = "baseclasscodefile";
 
     // The <compilation> config section
     private CompilationSection _compConfig;
@@ -632,8 +633,6 @@ public abstract class TemplateParser : BaseParser, IAssemblyDependencyParser
         // Register the <object> tag
         _typeMapper.RegisterTag("object", typeof(System.Web.UI.ObjectTag));
 
-        _sourceDependencies = new CaseInsensitiveStringSet();
-
         // Create and seed the stack of ID lists.
         _idListStack = new Stack();
         _idList = new CaseInsensitiveStringSet();
@@ -972,6 +971,8 @@ public abstract class TemplateParser : BaseParser, IAssemblyDependencyParser
         }
         catch (Exception e)
         {
+
+            Console.Out.WriteLine($"error is coming: {virtualPath}");
 #if PORT_ERROR_REPORTING
             ErrorFormatter errorFormatter = null;
 
@@ -2279,7 +2280,7 @@ private Match RunTextRegex(string text, int textPos) {
 
                 try
                 {
-                    ProcessCodeFile(VirtualPath.Create(Util.GetNonEmptyAttribute(name, value)));
+                    ProcessCodeFile(VirtualPath.Create(Util.GetNonEmptyAttribute(name, value)));                    
                 }
                 catch (Exception ex)
                 {
@@ -3404,12 +3405,22 @@ private Match RunTextRegex(string text, int textPos) {
      */
     private void AddBaseTypeDependencies(Type type)
     {
+        if(type == default)
+        {
+            throw new ArgumentNullException(nameof(type), $"type was null in AddBaseTypeDependencies");
+        }
+
         Assembly a = type.Module.Assembly;
 
         // If the type is in a standard assembly, don't bother
         if (a == typeof(string).Assembly || a == typeof(Page).Assembly || a == typeof(Uri).Assembly)
         {
             return;
+        }
+
+        if (a == default)
+        {
+            //throw new Exception("a as assembly was null in AddBaseTypeDependencies");
         }
 
         AddAssemblyDependency(a);

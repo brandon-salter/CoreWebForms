@@ -2267,7 +2267,7 @@ public partial class Page : TemplateControl, IHttpAsyncHandler
         IDictionary controlStates = null;
         Pair allSavedViewState = null;
         Pair statePair = state as Pair;
-        if (state != null)
+        if (statePair != null)
         {
             controlStates = statePair.First as IDictionary;
             allSavedViewState = statePair.Second as Pair;

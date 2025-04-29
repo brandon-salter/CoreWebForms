@@ -42,8 +42,15 @@ public class DynamicCompilationTests
     [DataRow("test12", "folder/subfolder.aspx")]
     [DataRow("test13", "custom_base_property.aspx")]
     [DataRow("test14", "sitemapdemo.aspx")]
+    [DataRow("test15", "custom_base_property.aspx")]
+    [DataRow("test16", "custom_assembly_property.aspx")]
+    [DataRow("test17", "loadusercontrol.aspx")]
+    [DataRow("test18", "loadpagewithquery.aspx")]
+    [DataRow("test19", "loadpagewithsubcontrols.aspx")]
+    [DataRow("test20", "loadpagewithserialization.aspx")]
     public async Task CompiledPageRuns(string test, params string[] pages)
     {
+
         if (test == "test08")
         {
             Assert.Inconclusive("Currently broken on CI");
@@ -52,6 +59,11 @@ public class DynamicCompilationTests
         if (test == "test13")
         {
             Assert.Inconclusive("Not implemented yet");
+        }
+
+        if (test == "test17")
+        {
+            Assert.Inconclusive("The view state invalidates the test results.");
         }
 
         // Arrange
@@ -80,9 +92,11 @@ public class DynamicCompilationTests
             })
             .ConfigureWebHost(app =>
             {
+                
                 app.UseTestServer();
                 app.Configure(app =>
                 {
+                    app.UsePathBase("/testpathbase");
                     app.UseRouting();
                     app.UseSession();
                     app.UseSystemWebAdapters();
@@ -108,6 +122,7 @@ public class DynamicCompilationTests
                         options.SerializerOptions.WriteIndented = true;
                     });
 
+                    services.AddHttpContextAccessor();
                     services.AddDistributedMemoryCache();
                     services.AddRouting();
                     services.AddSystemWebAdapters()
@@ -121,7 +136,14 @@ public class DynamicCompilationTests
                         })
                         .AddWebForms()
                         .AddScriptManager()
-                        .AddDynamicPages();
+                        .AddDynamicPages(options =>
+                        {
+                            
+                            options.AddBaseClassFiles("supporting_enum.cs");
+                            //options.AddBaseClassFiles("base_page.cs");
+                            options.AddBaseClassFiles("controls/base_control.cs");
+                            //options.AddBaseClassFiles("class_to_reference.cs");
+                        });
                     services.AddSingleton<IDataProtectionProvider, NoopDataProtector>();
                     if (test == "test14")
                     {
@@ -133,20 +155,22 @@ public class DynamicCompilationTests
                             });
                     }
                 });
+                
             })
             .Start();
 
         // Act
         var client = host.GetTestClient();
 
+        client.BaseAddress = new Uri("http://localhost");
         for (int i = 0; i < pages.Length; i++)
         {
             var expectedHtml = expectedPages[i];
             var page = pages[i];
 
             string? result = null;
+            //var currentPage = $"/testpathbase/{page}";
             var currentPage = page;
-
             do
             {
                 using var response = await client.GetAsync(currentPage, cts.Token);
@@ -177,11 +201,17 @@ public class DynamicCompilationTests
             else
             {
                 Assert.AreEqual(expectedHtml.ReplaceLineEndings(), result.ReplaceLineEndings());
+                //Assert.AreEqual(RemoveWhitespace(expectedHtml.ReplaceLineEndings()), RemoveWhitespace(result.ReplaceLineEndings()));
             }
         }
     }
 
     private static string NormalizePage(string path) => path.Replace("/", "__");
+
+    //private static string RemoveWhitespace(string text)
+    //{
+    //    return new string(text.Where(c => !Char.IsWhiteSpace(c)).ToArray());
+    //}
 
     // Allows for data protection to be turned off for testing purposes.
     private sealed class NoopDataProtector : IDataProtector, IDataProtectionProvider

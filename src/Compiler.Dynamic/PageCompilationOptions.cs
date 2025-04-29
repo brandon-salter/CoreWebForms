@@ -18,6 +18,7 @@ public class PageCompilationOptions
 
     internal List<TagNamespaceRegisterEntry> Entries { get; } = [];
 
+    internal List<string> BaseClassFiles { get; } = [];
     internal IFileProvider WebFormsFileProvider { get; set; } = default!;
 
     internal Dictionary<string, Func<VirtualPath, IWebFormsCompilationFeature, DependencyParser>> Parsers { get; } = new(StringComparer.OrdinalIgnoreCase);
@@ -27,6 +28,11 @@ public class PageCompilationOptions
     public Func<CompilationOptions, CompilationOptions>? OnCreateOption { get; set; }
 
     public void RegisterPrefix(string tagPrefix, string namespaceName, string assemblyName) => Entries.Add(new(tagPrefix, namespaceName, assemblyName));
+
+    public void AddBaseClassFiles(string extension)
+    {
+        BaseClassFiles.Add(extension);
+    }
 
     internal void AddParser<DParser>(string extension)
         where DParser : DependencyParser, new()
@@ -38,7 +44,7 @@ public class PageCompilationOptions
                 WebFormsFileProvider = WebFormsFileProvider,
                 CompiledTypeAccessor = compiledTypeAccessor,
             };
-            dependencyParser.Init(path);
+            dependencyParser.Init(path, BaseClassFiles);
 
             return dependencyParser;
         }
