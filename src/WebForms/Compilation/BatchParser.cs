@@ -50,7 +50,6 @@ internal abstract class DependencyParser : BaseParser
             TemplateParser.AddSourceDependency(VirtualPath.Create(baseClassFile));
         }
 
-        Console.WriteLine($"Loading assemblies from {Path.GetDirectoryName(Environment.ProcessPath)}");
         loadAssemblies(Path.GetDirectoryName(Environment.ProcessPath));
 
 
