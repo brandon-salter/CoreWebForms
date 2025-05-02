@@ -50,7 +50,11 @@ internal abstract class DependencyParser : BaseParser
             TemplateParser.AddSourceDependency(VirtualPath.Create(baseClassFile));
         }
 
-        loadAssemblies(Path.GetDirectoryName(Environment.ProcessPath));
+        Console.WriteLine(Environment.CurrentDirectory);
+        Console.WriteLine(Environment.ProcessPath);
+        Console.WriteLine(virtualPath.Path);
+
+        loadAssemblies(Environment.CurrentDirectory);
 
 
         var directory = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory();
@@ -65,9 +69,24 @@ internal abstract class DependencyParser : BaseParser
         string[] assemblyFiles = Directory.GetFiles(rootPath, "*.dll");
         foreach (var file in assemblyFiles)
         {
-            var currentAssembly = Assembly.LoadFile(file);
+            Assembly currentAssembly = null;
+            try
+            {
+                // Load the assembly
+                currentAssembly = Assembly.LoadFile(file);
+                TemplateParser.AddAssemblyDependency(currentAssembly.FullName, false);
+            }
+            catch (BadImageFormatException Exception)
+            {
+                // Ignore any errors loading assemblies
+                Console.WriteLine($"Error loading assembly: {file}, Exception: {Exception.Message}");
+            }
+            catch(FileNotFoundException Exception)
+            {
+                // Ignore any errors loading assemblies
+                Console.WriteLine($"Error loading assembly file not found: {file}, Exception: {Exception.Message}");
+            }
 
-            TemplateParser.AddAssemblyDependency(currentAssembly.FullName, false);
 
         }
     }

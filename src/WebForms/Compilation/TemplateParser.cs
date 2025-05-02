@@ -3480,12 +3480,6 @@ private Match RunTextRegex(string text, int textPos) {
         if (addDependentAssemblies)
         {
             AssemblySet assemblyDependencies = Util.GetReferencedAssemblies(assembly);
-
-            foreach(var item in assemblyDependencies)
-            {
-                Console.WriteLine($"Loading dependent assembly: {item.GetType().Name}");
-            }
-
             AddAssemblyDependencies(assemblyDependencies);
         }
     }
@@ -3503,6 +3497,7 @@ private Match RunTextRegex(string text, int textPos) {
         {
             return;
         }
+
 
         foreach (Assembly a in assemblyDependencies)
         {
