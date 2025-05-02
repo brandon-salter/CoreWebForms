@@ -50,12 +50,7 @@ internal abstract class DependencyParser : BaseParser
             TemplateParser.AddSourceDependency(VirtualPath.Create(baseClassFile));
         }
 
-        Console.WriteLine(Environment.CurrentDirectory);
-        Console.WriteLine(Environment.ProcessPath);
-        Console.WriteLine(virtualPath.Path);
-
-        loadAssemblies(Environment.CurrentDirectory);
-
+        loadAssemblies(AppContext.BaseDirectory);
 
         var directory = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory();
         var currentAssembly = Assembly.LoadFile(Path.Combine(directory, "netstandard.dll"));
